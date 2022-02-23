@@ -50,7 +50,7 @@ export default function () {
       false
     );
 
-    threeWorld();
+    // threeWorld();
     setLight();
     waterSettings();
     skySettings();
@@ -59,19 +59,19 @@ export default function () {
 
   function threeWorld() {
     //座標軸の生成
-    // const axes = new THREE.AxesHelper(1000);
-    // axes.position.set(0, 0, 0);
-    // scene.add(axes);
+    const axes = new THREE.AxesHelper(1000);
+    axes.position.set(0, 0, 0);
+    scene.add(axes);
 
     //グリッドの生成
-    // const grid = new THREE.GridHelper(100, 100);
-    // scene.add(grid);
+    const grid = new THREE.GridHelper(100, 100);
+    scene.add(grid);
   }
 
   function setLight() {
     //環境光
-    const ambientLight = new THREE.AmbientLight(0xffffff);
-    scene.add(ambientLight);
+    const light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    scene.add( light );
   }
 
   function waterSettings() {
@@ -90,9 +90,9 @@ export default function () {
         }
       ),
       sunDirection: new THREE.Vector3(),
-      sunColor: 0xFFC3ED, // default color: 0xffffff
+      sunColor: 0xF0C6F3, // default color: 0xffffff
       alpha: 1.0,
-      waterColor: 0x7F7F7F, // default color: 0x7F7F7F
+      waterColor: 0xF0C6F3, // default color: 0x7F7F7F
       distortionScale: 4,
       fog: scene.fog !== undefined,
       time: 100000,
@@ -113,7 +113,7 @@ export default function () {
     //Skyの設定
     const sky_uniforms = sky.material.uniforms;
     sky_uniforms['turbidity'].value = 10;
-    sky_uniforms['rayleigh'].value = 2;
+    sky_uniforms['rayleigh'].value = 5;
     // sky_uniforms['luminance'].value = 1;
     sky_uniforms['mieCoefficient'].value = 0.005;
     sky_uniforms['mieDirectionalG'].value = 0.8;
@@ -121,16 +121,16 @@ export default function () {
     //Sun
     const sunSphere = new THREE.Mesh(
         new THREE.SphereGeometry(200,16,8),
-        new THREE.MeshBasicMaterial({color:0xFFC3ED}) // default color: 0xffffff
+        new THREE.MeshBasicMaterial({color:0xF0C6F3}) // default color: 0xffffff
     );
     scene.add(sunSphere);
     
     //Sunの設定
     const sun_uniforms = sky.material.uniforms;
     sun_uniforms['turbidity'].value = 10;
-    sun_uniforms['rayleigh'].value = 2;
-    sun_uniforms['mieCoefficient'].value = 0.005;
-    sun_uniforms['mieDirectionalG'].value = 0.8;
+    sun_uniforms['rayleigh'].value = 5;
+    sun_uniforms['mieCoefficient'].value = 0; // 0 ~ 1 0に近いほど明るくなる 小数点指定可能
+    sun_uniforms['mieDirectionalG'].value = 1;
     // sun_uniforms['luminance'].value = 1;
     
     const theta = Math.PI * ( -0.01 );
@@ -139,7 +139,7 @@ export default function () {
     sunSphere.position.x = distance * Math.cos(phi);
     sunSphere.position.y = distance * Math.sin(phi) * Math.sin(theta);
     sunSphere.position.z = distance * Math.sin(phi) * Math.cos(theta);
-    sunSphere.visible = true;
+    sunSphere.visible = false;
     sun_uniforms['sunPosition'].value.copy(sunSphere.position);
   }
 
