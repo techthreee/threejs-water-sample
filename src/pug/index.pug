@@ -1,0 +1,15 @@
+extend ./includes/_layout
+include ./includes/mixin/_header.pug
+include ./includes/mixin/_footer.pug
+include ./includes/mixin/_button.pug
+
+block vars
+  include ./includes/_config.pug
+  - var page = pages['top']
+
+block content
+
+  .container
+
+    main
+      div#canvas_vr

@@ -1,0 +1,6 @@
+mixin button(body, link, blank)
+
+  if blank
+    a.button(href=link, target="_blank")= body
+  else 
+    a.button(href=link)= body

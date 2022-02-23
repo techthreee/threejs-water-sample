@@ -1,0 +1,42 @@
+@import './base/variable';
+@import './base/reset';
+@import './base/base';
+
+// mixin
+@import './mixn/mediaquery';
+
+// components
+
+// pages
+@import './pages/top';
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+
+  &.is-overflow {
+    overflow: hidden;
+  }
+}
+
+.is-pc {
+  display: block;
+}
+
+.is-sp {
+  display: none;
+}
+
+@include mq() {
+  .is-pc {
+    display: none;
+  }
+  .is-sp {
+    display: block;
+  }
+}
